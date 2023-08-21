@@ -1,42 +1,26 @@
+import {Routes, Route, Outlet} from "react-router-dom";
+
+import Home from "./routes/home/home.component";
+import SignIn from "./routes/sign-in/sign-in.components";
+
+const Navigation = () => {
+  return (
+    <div>
+      <h1>我是導航</h1>
+      <Outlet></Outlet>
+    </div>
+  );
+};
+
+
 const App = () => {
   return (
-    <div className='categories-container'>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Hats</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Jackets</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Sneakers</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Womens</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Mens</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route path="home" element={<Home />}></Route>
+        <Route path="signIn" element = {<SignIn/>}></Route>
+      </Route>
+    </Routes>
   );
 };
 
