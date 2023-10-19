@@ -1,18 +1,34 @@
-// const a = () => {
-//     let count = 1;
-//     return () => {
-//         console.log(count++);
-//     };
-// };
+/**
+ * @param {Function} fn
+ * @param {Array} args
+ * @param {number} t
+ * @return {Function}
+ */
+var cancellable = function (fn, args, t) {
+    return () => { };
+};
 
-// let c = a();
 
-// setInterval(() => {
-//     c();
-// }, 1000);
+const result = [];
 
-for (let i = 1; i <= 5; i++) {
-    setTimeout(() => {
-        console.log(i);
-    }, 1000 * i);
-}
+const fn = (x) => x * 5;
+const args = [2], t = 20, cancelT = 50;
+
+const start = performance.now();
+
+const log = (...argsArr) => {
+    const diff = Math.floor(performance.now() - start);
+    result.push({"time": diff, "returned": fn(...argsArr)});
+};
+
+const cancel = cancellable(log, args, t);
+
+const maxT = Math.max(t, cancelT);
+console.log(t, cancelT);
+setTimeout(() => {
+    cancel();
+}, cancelT);
+
+setTimeout(() => {
+    console.log(result); // [{"time":20,"returned":10}]
+}, maxT + 15);
