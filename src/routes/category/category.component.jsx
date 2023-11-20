@@ -12,8 +12,9 @@ const Category = () => {
     const {category} = useParams();
     const categoriesMap = useSelector(selectCategoriesMap);
     const [products, setProducts] = useState(categoriesMap[category]);
-
+    console.log('render/Rerender category');
     useEffect(() => {
+        console.log('effect fire');
         setProducts(categoriesMap[category]);
     }, [category, categoriesMap]);
 

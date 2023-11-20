@@ -6,6 +6,7 @@ import CategoryPreview from "../../components/category-preview/category-preview.
 
 
 const CategoriesPreview = () => {
+    //useSelector用於從store中取出state , state => state.xxx
     const categoriesMap = useSelector(selectCategoriesMap);
     return (
         <>
