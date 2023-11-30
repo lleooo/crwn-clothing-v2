@@ -18,6 +18,7 @@ import {
     query,
     getDocs
 } from "firebase/firestore";
+import {compileString} from "sass";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAAF7_j-0dHzTDwYdQhS0cvQ1b2iAi-BVg",
@@ -64,7 +65,7 @@ export const getCategoriesAndDocuments = async () => {
     // return categoryMap;
 };
 
-export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInfo) => {
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'user', userAuth.uid);
@@ -86,8 +87,8 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) 
             console.log('error creating the user', error);
         }
     }
-
-    return userDocRef;
+    console.log(userSnapshot);
+    return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -106,4 +107,13 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (cb) => {
     onAuthStateChanged(auth, cb);
+};
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+            unsubscribe();
+            resolve(userAuth);
+        }, reject);
+    });
 };
